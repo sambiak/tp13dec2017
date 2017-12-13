@@ -1,7 +1,9 @@
 from random import shuffle
 g = dict()
-CHAUSSURE = "chaussure"
-CHAUSSETTE = "chaussette"
+CHAUSSURE_GAUCHE = "chaussure_gauche"
+CHAUSSETTE_GAUCHE = "chaussette_gauche"
+CHAUSSURE_DROITE = "chaussure_droite"
+CHAUSSETTE_DROITE = "chaussette_droite"
 MONTRE = "montre"
 PANTALON = "pantalon"
 CEINTURE = "ceinture"
@@ -9,16 +11,18 @@ CHEMISE = "chemise"
 PULL = "pull"
 MANTEAU = "manteau"
 CEINTURE = "ceinture"
+CALECON = "calecon"
 
-g[CHAUSSETTE]  = [None, ["chaussure"]]
+g[CHAUSSETTE_GAUCHE]  = [None, ["chaussure_gauche"]]
 g[MONTRE] = [None, []]
-g[CHAUSSURE] = [None, []]
+g[CHAUSSURE_GAUCHE] = [None, []]
 g[CEINTURE] = [None, []]
 g[MANTEAU] = [None, []]
-g["pantalon"] = [None, ["ceinture", CHAUSSURE]]
+g["pantalon"] = [None, ["ceinture", CHAUSSURE_GAUCHE]]
 g[CHEMISE] = [None,[CEINTURE, PULL]]
 g[PULL] = [None,[MANTEAU]]
-g["r"] = [None, [CHAUSSURE, CHAUSSETTE, MONTRE, PANTALON, CEINTURE, CHEMISE, PULL, MANTEAU, CEINTURE]]
+g[CALECON] = [None, [PANTALON]]
+g["r"] = [None, [CHAUSSURE_GAUCHE, CHAUSSETTE_GAUCHE, MONTRE, PANTALON, CEINTURE, CHEMISE, PULL, MANTEAU, CEINTURE, CALECON]]
 
 def DFS(x, graph, value):
     for voisin in graph[x][1]:
@@ -38,6 +42,7 @@ def DFS2(x, graph, value):
         x = pile.pop()
         print(x)
         if not graph[x][0]:
+            shuffle(graph[x][1])
             for voisin in graph[x][1]:
                 if not graph[voisin][0]:
                     pile.append(x)
